@@ -10,7 +10,7 @@
 <div align="center">
   <p>Brought to you by</p>
   <a href="https://systemset.co" target="_blank">
-    <img src="https://via.placeholder.com/200x50/000000/ffffff?text=systemset.co" alt="systemset.co" width="200" />
+    <img src="https://i.ibb.co/abcd123/systemset-logo.png" alt="systemset.co" width="200" />
   </a>
 </div>
 
@@ -35,8 +35,8 @@ A clean, accessible Next.js app that generates LinkedIn job search URLs from you
 Select your job search preferences and the app builds a complete LinkedIn URL:
 
 **Your Selections:**
-- Designation: Python Developer
-- Location: Karachi
+- Designation: Software Engineer
+- Location: San Francisco, Calirfornia
 - Job Type: Full-time
 - Work Mode: Remote
 - Experience: Entry Level
@@ -44,7 +44,7 @@ Select your job search preferences and the app builds a complete LinkedIn URL:
 
 **Generated URL:**
 ```
-https://www.linkedin.com/jobs/search/?keywords=Python+Developer&location=Karachi&f_WT=1&f_WRA=1&f_E=2&f_TPR=r3600
+https://www.linkedin.com/jobs/search/?keywords=Software+Engineer&location=Karachi&f_WT=1&f_WRA=1&f_E=2&f_TPR=r3600
 ```
 
 ### LinkedIn Parameters
@@ -110,8 +110,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
-cd url-modifier
+git clone https://github.com/Systemsetco/WorkIn.git
+cd WorkIn
 
 # Install dependencies
 npm install
@@ -272,6 +272,6 @@ MIT License - feel free to use this project for any purpose.
 
 ---
 
-**Version:** 2.0.0 - Smart Job Link Generator
+**Version:** 2.0.0 - WorkIn - Work in smarter, not later
 
 **Note:** This tool is not affiliated with or endorsed by LinkedIn. It simply generates search URLs based on your preferences. Use responsibly and respect LinkedIn's Terms of Service.
