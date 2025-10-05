@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
+import dynamic from 'next/dynamic';
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,13 +12,18 @@ import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+
+// Dynamically import Dialog components with SSR disabled
+const JobSearchDialog = dynamic(
+  () => import('@/components/JobSearchDialog').then((mod) => mod.JobSearchDialog),
+  { ssr: false }
+);
+
+const SuccessDialog = dynamic(
+  () => import('@/components/SuccessDialog').then((mod) => mod.SuccessDialog),
+  { ssr: false }
+);
+
 import {
   buildLinkedInJobURL,
   validateFilters,
@@ -43,6 +49,10 @@ import {
 import { useTheme } from "next-themes";
 
 export default function LandingPage() {
+  const { toast } = useToast();
+  const { theme, setTheme } = useTheme();
+  const [copied, setCopied] = useState(false);
+  // Use the imported JobFilters type from linkedin-url-builder
   const [filters, setFilters] = useState<JobFilters>({
     keywords: "",
     location: "",
@@ -55,18 +65,13 @@ export default function LandingPage() {
 
   const [generatedUrl, setGeneratedUrl] = useState("");
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-
-  const { toast } = useToast();
-  const { theme, setTheme } = useTheme();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
-
-  useEffect(() => {
+    // Set loading to false when component mounts
+    setIsLoading(false);
+    
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (showModal && generatedUrl) {
         e.preventDefault();
@@ -75,7 +80,9 @@ export default function LandingPage() {
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
   }, [showModal, generatedUrl]);
 
   const handleGenerate = () => {
@@ -238,7 +245,7 @@ export default function LandingPage() {
                   </Label>
                   <Input
                     id="keywords"
-                    placeholder="e.g. Python Developer"
+                    placeholder="e.g. Software Engineer"
                     value={filters.keywords}
                     onChange={(e) => updateFilter("keywords", e.target.value)}
                     className={error ? "border-destructive" : ""}
@@ -250,7 +257,7 @@ export default function LandingPage() {
                   <Label htmlFor="location">Location</Label>
                   <Input
                     id="location"
-                    placeholder="e.g. Karachi, Pakistan"
+                    placeholder="e.g. San Francisco, California"
                     value={filters.location}
                     onChange={(e) => updateFilter("location", e.target.value)}
                   />
@@ -427,64 +434,18 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      <Dialog open={showModal} onOpenChange={setShowModal}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100 dark:bg-green-900">
-                <Check className="h-5 w-5 text-green-600 dark:text-green-400" />
-              </div>
-              <DialogTitle className="text-xl">Link generated successfully!</DialogTitle>
-            </div>
-            <DialogDescription className="text-base">
-              {filters.keywords && filters.location
-                ? `${filters.keywords} in ${filters.location}`
-                : filters.keywords
-                ? filters.keywords
-                : "Your job search"}
-            </DialogDescription>
-          </DialogHeader>
-
-          <div className="space-y-4 mt-2">
-            <div className="space-y-2">
-              <Label className="text-sm text-muted-foreground">Your LinkedIn Job Search URL</Label>
-              <div className="flex gap-2">
-                <Input value={generatedUrl} readOnly className="font-mono text-xs" />
-                <Button variant="outline" size="icon" onClick={handleCopy}>
-                  {copied ? (
-                    <Check className="h-4 w-4 text-green-600" />
-                  ) : (
-                    <Copy className="h-4 w-4" />
-                  )}
-                </Button>
-              </div>
-            </div>
-
-            <div className="rounded-lg border border-green-200 dark:border-green-900 bg-green-50 dark:bg-green-950 p-3">
-              <p className="text-xs text-green-700 dark:text-green-300">
-                {getFilterSummary(filters)}
-              </p>
-            </div>
-
-            <div className="flex gap-2 pt-2">
-              <Button
-                variant="default"
-                className="flex-1 bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700"
-                onClick={() => {
-                  window.open(generatedUrl, "_blank", "noopener,noreferrer");
-                  setShowModal(false);
-                }}
-              >
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Open in LinkedIn
-              </Button>
-              <Button variant="outline" onClick={() => setShowModal(false)}>
-                Close
-              </Button>
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
+      <Suspense fallback={null}>
+        <SuccessDialog
+          open={showModal}
+          onOpenChange={setShowModal}
+          generatedUrl={generatedUrl}
+          filters={{
+            ...filters,
+            location: filters.location || ''
+          }}
+          getFilterSummary={getFilterSummary}
+        />
+      </Suspense>
     </div>
   );
 }
