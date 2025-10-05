@@ -404,7 +404,7 @@ export default function LandingPage() {
             </p>
             <div className="flex justify-center gap-4 pt-4">
               <Link
-                href="https://github.com"
+                href="https://github.com/Systemsetco/WorkIn"
                 target="_blank"
                 className="inline-flex items-center gap-2 text-sm hover:text-green-600 dark:hover:text-green-400 transition-colors"
               >
