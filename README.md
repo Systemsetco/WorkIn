@@ -1,4 +1,4 @@
-# WorkIn - LinkedIn Job Search URL Generator
+# WorkIn - Work in smarter, not later
 
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/Systemsetco/WorkIn)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
@@ -10,7 +10,7 @@
 <div align="center">
   <p>Brought to you by</p>
   <a href="https://systemset.co" target="_blank">
-    <img src="https://i.ibb.co/abcd123/systemset-logo.png" alt="systemset.co" width="200" />
+    <img src="https://ibb.co/5Wfxckm0" alt="systemset.co" width="200" />
   </a>
 </div>
 
