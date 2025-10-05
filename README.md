@@ -9,7 +9,9 @@
 
 <div align="center">
   <p>Brought to you by</p>
-  <a href="https://ibb.co/5Wfxckm0"><img src="https://i.ibb.co/Gvb3P9y6/Systemset-Logo.png" alt="Systemset-Logo" border="0"></a>
+  <a href="https://ibb.co/5Wfxckm0">
+    <img src="https://i.ibb.co/Gvb3P9y6/Systemset-Logo.png" width="300" alt="Systemset-Logo" border="0">
+  </a>
 </div>
 
 ---
