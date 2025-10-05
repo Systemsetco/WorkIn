@@ -4,7 +4,7 @@
 
 [build.environment]
   NEXT_TELEMETRY_DISABLED = "1"
-  NODE_VERSION = "18.17.1"  # Specific LTS version
+  NODE_VERSION = "22.0.0"  # Updated to Node.js 22
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
