@@ -8,9 +8,6 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
-  [plugins.inputs]
-    enableStaticFileOptimization = true
-    enableImageOptimization = true
 
 [dev]
   framework = "next"
