@@ -1,14 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  output: 'export',
+  distDir: 'out',
+  reactStrictMode: false,
+  images: {
+    unoptimized: true,
+  },
   eslint: {
-    // Disable ESLint during builds
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // Disable TypeScript type checking during builds
     ignoreBuildErrors: true,
   },
+  // Disable React's strict mode during development
+  reactStrictMode: false,
   // Optimize package imports
   experimental: {
     esmExternals: 'loose',
